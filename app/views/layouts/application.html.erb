@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Logsfeed</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.1.0/rx.all.min.js' %>
+    <%= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/rxjs-dom/7.0.3/rx.dom.min.js' %>
+  </head>
+
+  <body>
+    <%= yield %>
+  </body>
+</html>

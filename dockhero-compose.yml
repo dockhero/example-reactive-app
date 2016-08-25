@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  db:
+    image: rethinkdb
+    ports:
+      - "28015:28015"
+    volumes:
+      - rethink-data:/data
+
+  web:
+    build: ./livestatus/
+    environment:
+      RETHINKDB_HOST: "db"
+    ports:
+      - "80:8090"
+    depends_on:
+      - db
+
+volumes:
+  rethink-data:
+    driver: local
+
+networks:
+  default:
+    driver: bridge
