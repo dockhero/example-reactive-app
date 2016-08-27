@@ -3,6 +3,7 @@ version: '2'
 services:
   db:
     image: rethinkdb
+    command: rethinkdb --bind all --initial-password ${RETHINKDB_PASSWORD}
     ports:
       - "28015:28015"
     volumes:
@@ -12,6 +13,7 @@ services:
     build: ./livestatus/
     environment:
       RETHINKDB_HOST: "db"
+      RETHINKDB_PASSWORD: "${RETHINKDB_PASSWORD}"
     ports:
       - "80:8090"
     depends_on:
