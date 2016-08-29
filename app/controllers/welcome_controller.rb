@@ -7,7 +7,6 @@ class WelcomeController < ApplicationController
   def do_something
     operation.progress += 1
     operation.save!
-
     render json: {status: 'OK'}
   end
 
