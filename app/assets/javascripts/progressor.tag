@@ -13,7 +13,7 @@
       this.update({progress: data.progress})
     }.bind(this));
 
-    this.on("unmount", () => {
+    this.on("unmount", function() {
       subscription.unsubscribe();
     })
   </script>

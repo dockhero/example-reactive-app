@@ -5,7 +5,7 @@ var rethinkdbStream = require('rethinkdb-stream');
 
 module.exports = function(){
   return function*(next){
-    this.sse = function(cursor, transformer){
+    this.rethinkSse = function(cursor, transformer){
       this.req.setTimeout(Number.MAX_VALUE);
       this.set('Content-Type', 'text/event-stream');
       this.set('Cache-Control', 'no-cache');

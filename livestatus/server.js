@@ -25,7 +25,7 @@ app.use(route.get("/operations/:id", function *(id) {
     .changes({include_initial: true})
     .run(this._rdbConn);
 
-  this.sse(cursor, extractNewVal);
+  this.rethinkSse(cursor, extractNewVal);
 }));
 
 
