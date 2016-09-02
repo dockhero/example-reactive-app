@@ -17,4 +17,4 @@
 //= require riot_rails
 
 // RIOT TAGS
-//= require ./progressor
+//= require ./tags/progressor
