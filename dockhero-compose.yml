@@ -14,15 +14,24 @@ services:
     environment:
       RETHINKDB_HOST: "db"
       RETHINKDB_PASSWORD: "${RETHINKDB_PASSWORD}"
-    ports:
-      - "80:8090"
     depends_on:
       - db
 
+  proxy:
+    image: dockhero/caddy-proxy
+    ports:
+      - "80:80"
+      - "80:80/udp"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - caddy_certificates:/svr
+    environment:
+      VIRTUAL_HOST: ${DOCKHERO_HOST}
+      TARGET_URL: http://web:8090
+
 volumes:
+  caddy_certificates:
+    driver: local
   rethink-data:
     driver: local
-
-networks:
-  default:
-    driver: bridge

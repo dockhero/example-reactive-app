@@ -11,6 +11,7 @@ module.exports = function(){
       this.set('Cache-Control', 'no-cache');
       this.set('Connection', 'keep-alive');
 
+      //https://github.com/dominictarr/event-stream
       var transformerStream = map(function (data, callback) {
         if (transformer) {
           data = transformer(data);
