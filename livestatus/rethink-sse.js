@@ -1,7 +1,7 @@
 var map = require('map-stream');
 var rethinkdbStream = require('rethinkdb-stream');
 
-var HEARTBEAT_INTERVAL = 90000; //ms
+var HEARTBEAT_INTERVAL = 60000; //ms
 
 module.exports = function(){
   return function*(next){
@@ -24,7 +24,7 @@ module.exports = function(){
       this.body = dbStream.pipe(transformerStream);
 
       var timerId = setInterval((function() {
-        this.body.write("\n");  // keeps socket open with CloudFlare
+        this.res.write("\n");  // keeps socket open with CloudFlare
       }).bind(this), HEARTBEAT_INTERVAL);
 
       this.body.on('close', function() {
