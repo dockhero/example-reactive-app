@@ -1,7 +1,7 @@
-// var sse = require('sse-stream');
-// var pipe = require('multipipe');
 var map = require('map-stream');
 var rethinkdbStream = require('rethinkdb-stream');
+
+var HEARTBEAT_INTERVAL = 90000; //ms
 
 module.exports = function(){
   return function*(next){
@@ -23,8 +23,13 @@ module.exports = function(){
 
       this.body = dbStream.pipe(transformerStream);
 
+      var timerId = setInterval((function() {
+        this.body.write("\n");  // keeps socket open with CloudFlare
+      }).bind(this), HEARTBEAT_INTERVAL);
+
       this.body.on('close', function() {
         dbStream.close();
+        clearInterval(timerId);
       })
     };
 
