@@ -18,7 +18,7 @@ heroku config:set RETHINKDB_PASSWORD="some-random-secret-582"
 Setting up RethinkDB + NodeJS microservice at Heroku can be done via Dockhero addon (see [docs](
 https://devcenter.heroku.com/articles/dockhero?preview=1) ).
 Please sign up for free alpha access at [dockhero.io](https://dockhero.io/) 
-Registering you as an Alpha tester at Heroku is a manual procedure, it may take some time.
+
 
 
 ```bash
