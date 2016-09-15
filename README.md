@@ -1,7 +1,42 @@
 RethinkDB + NodeJS as ActionCable alternative
 ================================================
 
-In this example the "magic" is happening in `livestatus/server.js` file,
+An example Rails app which uses RethinkDB + NodeJS microservice to push background operation progress to the front-end.
+The progress is updated in the DB via NoBrainer ORM, and RethinkDB's changefeed is delivered to the front-end
+using Server-Sent Events (SSE) and rendered in the UI with RiotJS.
+
+Try it yourself
+---------------
+
+The Ruby part of this example can be deployed to Heroku with the standard Git deployment flow.
+Once deployed, set `RETHINKDB_PASSWORD` heroku config var to something random
+
+```bash
+heroku config:set RETHINKDB_PASSWORD="some-random-secret-582"
+```
+
+Setting up RethinkDB + NodeJS microservice at Heroku can be done via Dockhero addon (see [docs](
+https://devcenter.heroku.com/articles/dockhero?preview=1) ).
+Please sign up for free alpha access at [dockhero.io](https://dockhero.io/)
+
+
+```bash
+heroku plugins:install dockhero
+heroku addons:create dockhero
+heroku dh:wait
+heroku dh:compose up -d
+```
+
+Now everything should be up and running, and you can test the app:
+
+```bash
+heroku open
+```
+
+How it Works
+---------------
+
+In this example all the "magic" is happening in `livestatus/server.js` file,
 which acts as a "cable" between the Ruby-on-Rails back-end and RiotJS front-end.
 It streams a sequence of changes from RethinkDB database to front-end via SSE.
 
@@ -17,7 +52,7 @@ app.use(route.get("/operations/:id", function *(id) {
 }));
 ```
 
-On the server, the changes are initiated with the following code in `WelcomeController`
+On the Rails back-end, the changes are initiated with the following code in `WelcomeController`
 which updates an instance of Operation record in RethinkDB
 
 ```ruby
@@ -43,27 +78,4 @@ var subscription = source.subscribe(function(data) {
 }.bind(this));
 ```
 
-Deployment
-=============
 
-The Ruby part of this example can be deployed to Heroku with the standard Git deployment flow.
-Once deployed, set `RETHINKDB_PASSWORD` heroku config var to something random
-
-```bash
-heroku config:set RETHINKDB_PASSWORD="some-random-secret-582"
-```
-
-Now deploy RethinkDB + NodeJS app using [Dockhero addon](https://dockhero.io/)
-
-```bash
-heroku plugins:install dockhero
-heroku addons:create dockhero
-heroku dh:wait
-heroku dh:compose up -d
-```
-
-Now everything should be up and running, and you can test the app:
-
-```bash
-heroku open
-```
