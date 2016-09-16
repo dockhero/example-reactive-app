@@ -43,13 +43,15 @@ It streams a sequence of changes from RethinkDB database to front-end via SSE.
 
 ```js
 // livestatus/server.js
+app.use(rethinkSse())  // a middleware which renders an SSE stream from RethinkDB's cursor
+
 app.use(route.get("/operations/:id", function *(id) {
   const cursor = yield r.table("operations")
     .get(id)
     .changes({include_initial: true})
     .run(this._rdbConn);
 
-  this.sse(cursor, extractNewVal);
+  this.rethinkSse(cursor);
 }));
 ```
 
